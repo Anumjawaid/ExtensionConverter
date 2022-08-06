@@ -1,19 +1,25 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
-*{
+
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
 }
-body{
+
+body {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
-  background:linear-gradient(180deg, rgba(9,9,121,1) 16%, rgba(0,12,255,1) 85%, rgba(9,9,121,1) 100%);
+  /* min-height: 100vh; */
+  color: #000CFF;
 }
-.header{
-  display:flex;
+.body{
+  margin-top: 6rem;
+}
+
+.header {
+  display: flex;
   margin: 0;
   padding: 0;
   overflow: hidden;
@@ -22,28 +28,29 @@ body{
   top: 0;
   width: 100%;
 }
-.fileimg{
-  width:80%;
-  height:50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-left: 3rem;
+
+.fileimg {
+  width: 200px;
+  height: 200px;
+  
+  margin-right:1rem;
 
 }
-.drag-area{
-  border: 2px dashed #f3f3f7;
-  height: 500px;
-  width: 700px;
-  border-radius: 5px;
+
+.drag-area {
+  border: 10px solid #000CFF;
+  height: 400px;
+  width: 400px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
 }
-.img-area{
-  border: 2px dashed #f3f3f7;
-  height: 500px;
+
+.img-area {
+  margin-top: 1rem;
+  border: 2px dashed #000CFF;
   width: 700px;
   border-radius: 5px;
   display: none;
@@ -51,69 +58,122 @@ body{
   justify-content: center;
   flex-direction: column;
 }
-.extensions{
-  border-top: 2px dashed #f3f3f7;
-  display:flex;
-  flex-direction: row;
-  width: 700px;
-  height: 400px;
+.functions,.croprotate{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  margin:2rem;
+  align-items: center;
+  justify-content: center;
 }
 
-.brand{
-  color:#000CFF;
+.extensions {
+  border-top: 2px dashed #000CFF;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding:2rem;
+  width: 700px;
+}
+
+.brand {
+  color: #000CFF;
   text-align: center;
   align-items: center;
 }
 
-.drag-area.active{
+.drag-area.active {
   border: 2px solid #000CFF;
 }
-.drag-area .icon{
+
+.drag-area .icon {
   font-size: 100px;
-  color: #fff;
+  color: #000CFF;
 }
-.drag-area header{
+
+ header {
   font-size: 30px;
   font-weight: 500;
-  color: #fff;
+  color: #000CFF;
 }
-.img-area header{
+
+.img-area header {
   font-size: 30px;
   font-weight: 500;
-  color: #fff;
+  color: #000CFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.drag-area span{
+
+.drag-area span {
   font-size: 25px;
   font-weight: 500;
   color: #fff;
   margin: 10px 0 15px 0;
 }
-.drag-area button{
-  padding: 10px 25px;
+
+.drag-area button {
+  padding: 8px 20px;
   font-size: 20px;
   font-weight: 500;
-  border: none;
+  border-color:1px solid #5256ad;
   outline: none;
   background: #fff;
   color: #5256ad;
-  border-radius: 5px;
+  border-radius: 5px solid #5256ad;
   cursor: pointer;
 }
-.upload{
+
+.upload {
   padding: 5px 10px;
   font-size: 15px;
   font-weight: 100;
-  border: none;
+  border-color:1px solid #5256ad;
   outline: none;
   background: #fff;
   color: #5256ad;
   border-radius: 3px;
   cursor: pointer;
 }
-.drag-area img{
+
+.drag-area img {
   height: 100%;
   width: 100%;
   object-fit: cover;
   border-radius: 5px;
-  
+
+}
+
+svg {
+  fill: currentColor;
+  height: 400px;
+  max-width: 66vmin;
+  transform-origin: center;
+  width: 600px;
+}
+.actionbtn{
+  padding: 2px 5px;
+  border-color:1px solid #5256ad;
+  outline: none;
+  background: #fff;
+  color: #5256ad;
+  border-radius: 3px;
+  cursor: pointer;
+}
+a{
+  text-decoration: none;
+  border:2px solid #5256ad;
+}
+.imagerolls{
+  display: flex;
+  flex-direction: column;
+
+}
+.cropimage{
+  display:none;
+}
+#canvas{
+position: relative;
+right:2rem;
 }
