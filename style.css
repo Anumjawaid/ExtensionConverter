@@ -27,6 +27,7 @@ body {
   position: fixed;
   top: 0;
   width: 100%;
+  box-shadow: 2px 5px 5px 5px grey;
 }
 
 .fileimg {
@@ -46,14 +47,16 @@ body {
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  padding:10px;
 }
 
-.img-area {
+.img-area,.doc-area,.video-area,.audio-area{
   margin-top: 1rem;
-  border: 2px dashed #000CFF;
+  border: 5px dashed #000CFF;
   width: 700px;
   border-radius: 5px;
   display: none;
+  padding:0rem 2rem 0rem 0rem;
   align-items: center;
   justify-content: center;
   flex-direction: column;
@@ -66,14 +69,17 @@ body {
   align-items: center;
   justify-content: center;
 }
-
-.extensions {
+.docimg{
+  position: relative;
+  left: 15rem;
+}
+.extensions ,.extensionsdoc,.extensionsvideo,.extensionsaudio{
   border-top: 2px dashed #000CFF;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  padding:2rem;
-  width: 700px;
+  padding:2rem ;
+  width: 690px;
 }
 
 .brand {
@@ -97,10 +103,16 @@ body {
   color: #000CFF;
 }
 
-.img-area header {
+.img-area header,.doc-area header,.video-area header,.audio-area header{
   font-size: 30px;
   font-weight: 500;
   color: #000CFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#imgname,#docname{
+  margin-top:2px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -117,11 +129,11 @@ body {
   padding: 8px 20px;
   font-size: 20px;
   font-weight: 500;
-  border-color:1px solid #5256ad;
+  border-color:2px solid #fff;
   outline: none;
-  background: #fff;
-  color: #5256ad;
-  border-radius: 5px solid #5256ad;
+  background: #000CFF;
+  color: white;
+  border-radius: 100px ;
   cursor: pointer;
 }
 
@@ -129,10 +141,10 @@ body {
   padding: 5px 10px;
   font-size: 15px;
   font-weight: 100;
-  border-color:1px solid #5256ad;
+  border-color:1px solid #fff;
   outline: none;
-  background: #fff;
-  color: #5256ad;
+  background: #000CFF;
+  color: white;
   border-radius: 3px;
   cursor: pointer;
 }
@@ -153,12 +165,12 @@ svg {
   width: 600px;
 }
 .actionbtn{
-  padding: 2px 5px;
-  border-color:1px solid #5256ad;
+  padding: 5px 10px;
+  
   outline: none;
-  background: #fff;
-  color: #5256ad;
-  border-radius: 3px;
+  background: #000CFF;
+  color: white;
+  border-radius: 10px;
   cursor: pointer;
 }
 a{
@@ -170,10 +182,15 @@ a{
   flex-direction: column;
 
 }
-.cropimage{
+.cropimage,.rotateimage{
   display:none;
 }
 #canvas{
 position: relative;
 right:2rem;
+}
+.rotate{
+  transform :rotate(90deg);
+  width:200px;
+  height:200px;
 }

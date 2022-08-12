@@ -29,30 +29,108 @@
     <div class="img-area" id="img">
       <header style="margin-top:'2rem'">Your Image</header>
       <div class="imagerolls">
+        <p id="imgname"></p>
+        <div class="functions" id="">
+
+
+        </div>
+        <div class="croprotate">
+          
+          <div class="cropimage">
+            <p>Cropped Image</p>
+            <canvas id="canvas" width="200px" height="200px"></canvas>
+          </div>
+          <div class="rotateimage">
+            <p>Rotate Image</p>
+
+          </div>
+        </div>
+
+      </div>
+      <div class="extensions">
+        <a class="actionbtn" onclick="Crop()">Crop</a>
+        <a class="actionbtn" onclick="rotateImg()">Rotate</a>
+        <select onchange="ChangeExtension(this)" class="actionbtn">
+          <option>Convert</option>
+          <option value="png">PNG</option>
+          <option value="jpg">JPG</option>
+          <option value="jpeg">JPEG</option>
+          <option value="PSD">PSD</option>
+          <option value="AI">AI</option>
+          <option value="tiff">TIFF</option>
+          <option value="tif">TIF</option>
+          <option value="xcd">XCD</option>
+
+
+
+
+        </select>
+
+
+      </div>
+
+    </div>
+
+    <div class="doc-area" id="doc">
+      <header style="margin-top:'2rem'">Your Document</header>
+      <p id="docname"></p>
+      <div class="icon">
+        <img src="./assets/doc.png" class="docimg" width='200px' height='200px'/>
+      </div>
+     
+      <div class="extensionsdoc">
+        <select onchange="ChangeExtension(this)" class="actionbtn">
+          <option>Convert</option>
+          <option value="png">PNG</option>
+          <option value="jpg">JPG</option>
+          <option value="jpeg">JPEG</option>
+          <option value="PSD">PSD</option>
+          <option value="AI">AI</option>
+          <option value="tiff">TIFF</option>
+          <option value="tif">TIF</option>
+          <option value="xcd">XCD</option>
+
+
+
+
+        </select>
+
+      </div>
+
+    </div>
+
+    <div class="video-area" id="video">
+      <header style="margin-top:'2rem'">Your Video</header>
+      <div class="icon">
+
+      </div>
       <div class="functions" id="">
 
 
       </div>
-      <div class="croprotate">
-        <div class="cropimage">
-          <p>Cropped Image</p>
-          <br/>
-        <canvas id="canvas" width="200px" height="200px"></canvas>
-      </div>
-      <div class="rotateimage">
-        <p>Rotate Image</p>
-        <br/>
-      
-    </div>
-      </div>
      
+      <div class="extensionsvideo">
+        
+
+      </div>
+
     </div>
-      <div class="extensions">
-        <button class="actionbtn" onclick="Crop()">Crop</button>
-        <a class="actionbtn">Rotate</a>
+
+    <div class="audio-area" id="audio">
+      <header style="margin-top:'2rem'">Your Audio</header>
+      <div class="icon">
+
+      </div>
+      <div class="functions" id="">
+
 
       </div>
      
+      <div class="extensionsaudio">
+        
+
+      </div>
+
     </div>
 
 
