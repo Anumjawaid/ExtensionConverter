@@ -185,7 +185,7 @@ a{
 .cropimage,.rotateimage{
   display:none;
 }
-#canvas{
+#canvas1{
 position: relative;
 right:2rem;
 }
@@ -193,4 +193,31 @@ right:2rem;
   transform :rotate(90deg);
   width:200px;
   height:200px;
+}
+
+#content{
+  position: relative;
+  width: 100%;
+  height: 380px;
+}
+#thefile {
+position: absolute;
+top: 10px;
+left: 10px;
+z-index: 100;
+}
+
+#canvas {
+position: absolute;
+left: 10px;
+top: 0;
+width: 100%;
+height: 100%;
+}
+
+audio {
+position: absolute;
+left: 10px;
+bottom: 10px;
+width: calc(100% - 20px);
 }

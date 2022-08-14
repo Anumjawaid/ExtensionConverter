@@ -22,7 +22,7 @@
       <header></header>
       <div class="icon"><i class="fas fa-cloud-upload-alt"></i></div>
       <button class="upload">Browse File</button>
-      <input type="file" hidden>
+      <input type="file" id="thefile" hidden>
     </div>
 
 
@@ -38,7 +38,7 @@
           
           <div class="cropimage">
             <p>Cropped Image</p>
-            <canvas id="canvas" width="200px" height="200px"></canvas>
+            <canvas id="canvas1" width="200px" height="200px"></canvas>
           </div>
           <div class="rotateimage">
             <p>Rotate Image</p>
@@ -81,8 +81,8 @@
       <div class="extensionsdoc">
         <select onchange="ChangeExtension(this)" class="actionbtn">
           <option>Convert</option>
-          <option value="png">PNG</option>
-          <option value="jpg">JPG</option>
+          <option value="png">Word</option>
+          <option value="jpg">PDF</option>
           <option value="jpeg">JPEG</option>
           <option value="PSD">PSD</option>
           <option value="AI">AI</option>
@@ -119,6 +119,11 @@
     <div class="audio-area" id="audio">
       <header style="margin-top:'2rem'">Your Audio</header>
       <div class="icon">
+        <div id="content">
+          <canvas id="canvas"></canvas>
+          <audio id="audio1" controls></audio>
+        </div>
+        
 
       </div>
       <div class="functions" id="">
