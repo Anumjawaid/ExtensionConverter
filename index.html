@@ -35,7 +35,7 @@
 
         </div>
         <div class="croprotate">
-          
+
           <div class="cropimage">
             <p>Cropped Image</p>
             <canvas id="canvas1" width="200px" height="200px"></canvas>
@@ -75,20 +75,16 @@
       <header style="margin-top:'2rem'">Your Document</header>
       <p id="docname"></p>
       <div class="icon">
-        <img src="./assets/doc.png" class="docimg" width='200px' height='200px'/>
+        <img src="./assets/doc.png" class="docimg" width='200px' height='200px' />
       </div>
-     
+
       <div class="extensionsdoc">
         <select onchange="ChangeExtension(this)" class="actionbtn">
           <option>Convert</option>
-          <option value="png">Word</option>
-          <option value="jpg">PDF</option>
-          <option value="jpeg">JPEG</option>
-          <option value="PSD">PSD</option>
-          <option value="AI">AI</option>
-          <option value="tiff">TIFF</option>
-          <option value="tif">TIF</option>
-          <option value="xcd">XCD</option>
+          <option value="application/vnd.openxmlformats-officedocument.wordprocessingml.document">Word</option>
+          <option value="application/docx">Word1</option>
+          <option value="application/pdf">PDF</option>
+          
 
 
 
@@ -101,16 +97,26 @@
 
     <div class="video-area" id="video">
       <header style="margin-top:'2rem'">Your Video</header>
+      <p id="vidname"></p>
       <div class="icon">
+       
 
       </div>
-      <div class="functions" id="">
+      <div class="functions" id="vid">
+       
 
 
       </div>
-     
+
       <div class="extensionsvideo">
-        
+          <select onchange="ChangeExtension(this)" class="actionbtn">
+            <option>Convert</option>
+            <option value="video/x-matroska">Matroska</option>
+            <option value="video/mp4">mp4</option>
+            <option value="video/mov">mov</option>
+          </select>
+  
+  
 
       </div>
 
@@ -118,21 +124,28 @@
 
     <div class="audio-area" id="audio">
       <header style="margin-top:'2rem'">Your Audio</header>
+      <p id="audname"></p>
       <div class="icon">
         <div id="content">
           <canvas id="canvas"></canvas>
-          <audio id="audio1" controls></audio>
+          <audio id="audio1" autoplay="true" controls loop></audio>
         </div>
-        
+
 
       </div>
       <div class="functions" id="">
 
 
       </div>
-     
+
       <div class="extensionsaudio">
-        
+        <select onchange="ChangeExtension(this)" class="actionbtn">
+          <option>Convert</option>
+          <option value="audio/ogg">Ogg</option>
+          <option value="audio/mpeg">mp3</option>
+          <option value="audio/wav">Wave</option>
+        </select>
+
 
       </div>
 

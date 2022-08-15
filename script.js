@@ -20,16 +20,12 @@ let outputfile
 
 let file; //this is a global variable and we'll use it inside multiple functions
 
-let imgextension = ["image/jpeg", "image/jpg", "image/png", "image/PSD", "image/tiff", "image/tif", "image/PSD", "image/XCD", "image/AI", "image/ico", "image/bmp", "image/CDR"]
+let imgextension = ["image/jpeg", "image/jpg", "image/png", "image/PSD", 'image/gif', "image/tiff", "image/tif", "image/PSD", "image/XCD", "image/AI", "image/ico", "image/bmp", "image/CDR"]
 let docextension = ["application/pdf", "text/plain", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"]
-let audioextension = ["audio/ogg", "audio/mpeg", "audio/wav", "audio/wav", 'image/gif']  //mpeg is mp3
-let videoextension = ["video/x-matroska", "video/mp4"]
+let audioextension = ["audio/ogg", "audio/mpeg", "audio/wav",]  //mpeg is mp3
+let videoextension = ["video/x-matroska", "video/mp4","video/mov"]
 
-function download() {
-  console.log("download")
-  console.log(outputfile, "output")
 
-}
 button.onclick = () => {
   input.click(); //if user click on the button then the input also clicked
 }
@@ -38,7 +34,6 @@ input.addEventListener("change", function () {
   //getting user select file and [0] this means if user select multiple files then we'll select only the first one
   file = this.files[0];
   dropArea.classList.add("active");
-  console.log(file, "file drop")
   console.log(file, "file button")
   showFile(); //calling function
 });
@@ -62,21 +57,16 @@ dropArea.addEventListener("drop", (event) => {
   event.preventDefault(); //preventing from default behaviour
   //getting user select file and [0] this means if user select multiple files then we'll select only the first one
   file = event.dataTransfer.files[0];
-  console.log(event.dataTransfer.files[0])
   outputfile = URL.createObjectURL(event.dataTransfer.files[0])
-  console.log(file, "file drop")
   showFile(); //calling function
 });
 
 async function showFile() {
-  console.log('show')
   let fileType = file.type; //getting selected file type
   if (imgextension.includes(fileType)) {
-    console.log("Includes Image")
     let fileReader = new FileReader(); //creating new FileReader object
     fileReader.onload = async () => {
       let fileURL = fileReader.result; //passing user file source in fileURL variable
-      console.log(fileURL, "fileURlss")
       // UNCOMMENT THIS BELOW LINE. I GOT AN ERROR WHILE UPLOADING THIS POST SO I COMMENTED IT
       let imgTag = `<img src="${fileURL}" alt="image" class='fileimg'>`;
       //creating an img tag and passing user selected file source inside src attribute
@@ -90,10 +80,9 @@ async function showFile() {
       a.download = file.name
 
       a.textContent = 'Download'
-      console.log(extension, "exte")
       extension.appendChild(a)
-      let iname=document.getElementById('imgname')
-      iname.innerHTML="Image Name: "+file.name
+      let iname = document.getElementById('imgname')
+      iname.innerHTML = "Image Name: " + file.name
       header.style.display = 'none'
       imgdiv.style.display = 'block'
     }
@@ -101,7 +90,6 @@ async function showFile() {
 
   }
   else if (docextension.includes(fileType)) {
-    console.log("Includes Document")
     let fileReader = new FileReader(); //creating new FileReader object
     fileReader.onload = async () => {
       let fileURL = fileReader.result; //passing user file source in fileURL variable
@@ -114,10 +102,9 @@ async function showFile() {
       a.download = file.name
 
       a.textContent = 'Download'
-      console.log(doccontainer, "exte")
       doccontainer.appendChild(a)
-      let iname=document.getElementById('docname')
-      iname.innerHTML="Document Name: "+file.name
+      let iname = document.getElementById('docname')
+      iname.innerHTML = "Document Name: " + file.name
       dropArea.style.display = 'none'
       header.style.display = 'none'
       docdiv.style.display = 'block'
@@ -125,18 +112,17 @@ async function showFile() {
     fileReader.readAsDataURL(file);
 
   } else if (videoextension.includes(fileType)) {
-    console.log("Includes Videoggg")
     let fileReader = new FileReader(); //creating new FileReader object
     fileReader.onload = async () => {
-      console.log("inside File URL")
       let fileURL = fileReader.result; //passing user file source in fileURL variable
       // showing document data
-      let imgTag = `<video width="320" height="240" controls>
-      <source src="${fileURL}" type="video/mp4">
-      <source src="${fileURL}" type="video/ogg">
+      let vidArea=document.getElementById('vid')
+      let imgTag = `<video width="620" height="240" controls>
+      <source src="${fileURL}" >
     Your browser does not support the video tag.
     </video>`;
-      imgArea.innerHTML = imgTag
+      vidArea.innerHTML = imgTag
+    
       let a = document.createElement('a')
       a.setAttribute('class', 'actionbtn')
 
@@ -145,32 +131,32 @@ async function showFile() {
       a.download = file.name
 
       a.textContent = 'Download'
-      console.log(vidcontainer, "exte")
       vidcontainer.appendChild(a)
       dropArea.style.display = 'none'
       header.style.display = 'none'
+      let iname = document.getElementById('vidname')
+      iname.innerHTML = "Video Name: " + file.name
       videodiv.style.display = 'block'
     }
     fileReader.readAsDataURL(file);
 
   }
   else if (audioextension.includes(fileType)) {
-    console.log("Includes Audio")
     let fileReader = new FileReader(); //creating new FileReader object
     fileReader.onload = async () => {
       let fileURL = fileReader.result; //passing user file source in fileURL variable
       // showing document data
       let a = document.createElement('a')
       a.setAttribute('class', 'actionbtn')
-
       outputfile = await downloadImage(fileURL)
       a.href = outputfile
       a.download = file.name
 
       a.textContent = 'Download'
-      console.log(audcontainer, "exte")
       audcontainer.appendChild(a)
       dropArea.style.display = 'none'
+      let iname = document.getElementById('audname')
+      iname.innerHTML = "Document Name: " + file.name
       header.style.display = 'none'
       audiodiv.style.display = 'block'
     }
@@ -214,53 +200,128 @@ function rotateImg() {
   rotatecontainer.appendChild(imagetag)
 }
 
+
+
+
 function ChangeExtension(replaces) {
-  let current = 'data:' + file.type
+  let current
   let newr
-  console.log(replaces.value,replaces.label, "option Extension")
-  let fileReader = new FileReader()
-  newr='data:image/'+replaces.value
-  // if (replaces.value=='JPG') {
-  //   newr='data:image/jpg'
-  // ; //creating new FileReader object
+  if (replaces.value.includes('audio')) {
+    current = 'data:' + file.type
+    let fileReader = new FileReader()
+    newr = 'data:audio/' + replaces.value
+
 
     fileReader.onload = async () => {
       let fileURL = fileReader.result; //passing user file source in fileURL variable
       // console.log(fileURL,"fileURlss")
       // UNCOMMENT THIS BELOW LINE. I GOT AN ERROR WHILE UPLOADING THIS POST SO I COMMENTED IT
-      console.log(newr, "INFILE READER ONLOAD")
       let a = document.createElement('a')
       a.setAttribute('class', 'actionbtn')
       let ay = fileURL.replace(current, newr)
-      console.log(ay)
       outputfile = await downloadImage(ay)
-      console.log(outputfile,'output')
       a.href = outputfile
       // replaces whatever is after . then add the new extension
-         console.log('In replaces value')
-      a.download = 'pic.'+replaces.value
-      console.log(file.name.replace('.PNG','.PSD'))
+      a.download = 'audio.' + replaces.value.split('/')[1]
       a.click()
-      
+
+
+    }
+    fileReader.readAsDataURL(file);
 
   }
-  fileReader.readAsDataURL(file);
+  else if (replaces.value.includes('video')) {
+    // console.log('In AUdio', replaces, "dsd", replaces.value.split('/')[1])
+    current = 'data:' + file.type
+    // console.log(replaces.value, replaces.label, "option Extension")
+    let fileReader = new FileReader()
+    newr = 'data:video/' + replaces.value
 
-  
+
+    fileReader.onload = async () => {
+      let fileURL = fileReader.result; //passing user file source in fileURL variable
+      // console.log(fileURL,"fileURlss")
+      // UNCOMMENT THIS BELOW LINE. I GOT AN ERROR WHILE UPLOADING THIS POST SO I COMMENTED IT
+      let a = document.createElement('a')
+      a.setAttribute('class', 'actionbtn')
+      let ay = fileURL.replace(current, newr)
+      outputfile = await downloadImage(ay)
+      a.href = outputfile
+      // replaces whatever is after . then add the new extension
+      a.download = 'video.' + replaces.value.split('/')[1]
+      a.click()
 
 
-  
-  
+    }
+    fileReader.readAsDataURL(file);
+
+  }
+  else if (replaces.value.includes('application')) {
+    current = 'data:' + file.type
+    let fileReader = new FileReader()
+    newr = 'data:application/' + replaces.value
+
+
+    fileReader.onload = async () => {
+      let fileURL = fileReader.result; //passing user file source in fileURL variable
+      // console.log(fileURL,"fileURlss")
+      // UNCOMMENT THIS BELOW LINE. I GOT AN ERROR WHILE UPLOADING THIS POST SO I COMMENTED IT
+      let a = document.createElement('a')
+      a.setAttribute('class', 'actionbtn')
+      let ay = fileURL.replace(current, newr)
+      outputfile = await downloadImage(ay)
+      a.href = outputfile
+      // replaces whatever is after . then add the new extension
+      a.download = 'document.' + replaces.value.split('/')[1]
+      a.click()
+
+
+    }
+    fileReader.readAsDataURL(file);
+
+  }
+
+
+
+  else {
+    current = 'data:' + file.type
+    let fileReader = new FileReader()
+    newr = 'data:image/' + replaces.value
+
+
+    fileReader.onload = async () => {
+      let fileURL = fileReader.result; //passing user file source in fileURL variable
+      // console.log(fileURL,"fileURlss")
+      // UNCOMMENT THIS BELOW LINE. I GOT AN ERROR WHILE UPLOADING THIS POST SO I COMMENTED IT
+      let a = document.createElement('a')
+      a.setAttribute('class', 'actionbtn')
+      let ay = fileURL.replace(current, newr)
+      outputfile = await downloadImage(ay)
+      a.href = outputfile
+      // replaces whatever is after . then add the new extension
+      a.download = 'pic.' + replaces.value
+      a.click()
+
+
+    }
+    fileReader.readAsDataURL(file);
+  }
+
+
+
+
+
+
 
 
 }
 
-window.onload = function() {
-  
+window.onload = function () {
+
   var file = document.getElementById("thefile");
   var audio = document.getElementById("audio1");
-  
-  file.onchange = function() {
+
+  file.onchange = function () {
     var files = this.files;
     audio.src = URL.createObjectURL(files[0]);
     audio.load();
@@ -280,7 +341,6 @@ window.onload = function() {
     analyser.fftSize = 256;
 
     var bufferLength = analyser.frequencyBinCount;
-    console.log(bufferLength);
 
     var dataArray = new Uint8Array(bufferLength);
 
@@ -303,9 +363,9 @@ window.onload = function() {
 
       for (var i = 0; i < bufferLength; i++) {
         barHeight = dataArray[i];
-        
-        var r = barHeight + (25 * (i/bufferLength));
-        var g = 250 * (i/bufferLength);
+
+        var r = barHeight + (25 * (i / bufferLength));
+        var g = 250 * (i / bufferLength);
         var b = 50;
 
         ctx.fillStyle = "#000CFF";
