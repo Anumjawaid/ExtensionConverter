@@ -5,6 +5,7 @@ var imgdiv = document.getElementById('img')
 var docdiv = document.getElementById('doc')
 var videodiv = document.getElementById('video')
 var audiodiv = document.getElementById('audio')
+var errordiv=document.getElementById('error')
 const imgArea = document.querySelector(".functions"),
   dragText = dropArea.querySelector("header"),
   button = dropArea.querySelector("button"),
@@ -162,6 +163,11 @@ async function showFile() {
     }
     fileReader.readAsDataURL(file);
 
+  }
+  else{
+    dropArea.style.display = 'none'
+    header.style.display = 'none'
+      errordiv.style.display = 'block'
   }
 
 

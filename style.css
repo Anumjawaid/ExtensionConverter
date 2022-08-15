@@ -27,7 +27,7 @@ body {
   position: fixed;
   top: 0;
   width: 100%;
-  box-shadow: 2px 5px 5px 5px grey;
+  box-shadow: 2px 3px 3px 3px grey;
 }
 
 .fileimg {
@@ -48,9 +48,11 @@ body {
   justify-content: center;
   flex-direction: column;
   padding:10px;
+  position: absolute;
+  left:35rem;
 }
 
-.img-area,.doc-area,.video-area,.audio-area{
+.img-area,.doc-area,.video-area,.audio-area,.error-area{
   margin-top: 1rem;
   border: 5px dashed #000CFF;
   width: 700px;
@@ -86,6 +88,9 @@ body {
   color: #000CFF;
   text-align: center;
   align-items: center;
+  position: absolute;
+  top:2.5rem;
+  left:10rem;
 }
 
 .drag-area.active {
@@ -98,19 +103,21 @@ body {
 }
 
  header {
-  font-size: 30px;
-  font-weight: 500;
+  font-size: 40px;
+  font-weight: 700;
+  margin-top: 2rem;
   color: #000CFF;
 }
 
-.img-area header,.doc-area header,.video-area header,.audio-area header{
+.img-area header,.doc-area header,.video-area header,.audio-area header,.error-area header{
   font-size: 30px;
-  font-weight: 500;
+  font-weight: 400;
   color: #000CFF;
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
 #imgname,#docname,#audname,#vidname{
   margin-top:2px;
   display: flex;
@@ -129,24 +136,23 @@ body {
   padding: 8px 20px;
   font-size: 20px;
   font-weight: 500;
-  border-color:2px solid #fff;
-  outline: none;
   background: #000CFF;
   color: white;
   border-radius: 100px ;
   cursor: pointer;
+  
+  
 }
 
 .upload {
   padding: 5px 10px;
   font-size: 15px;
   font-weight: 100;
-  border-color:1px solid #fff;
-  outline: none;
   background: #000CFF;
   color: white;
   border-radius: 3px;
   cursor: pointer;
+  border-color: #000CFF;
 }
 
 .drag-area img {
@@ -165,13 +171,14 @@ svg {
   width: 600px;
 }
 .actionbtn{
-  padding: 5px 10px;
-  
-  outline: none;
+  padding: 8px 20px;
+  font-size: 20px;
+  font-weight: 500;
   background: #000CFF;
   color: white;
-  border-radius: 10px;
+  border-radius: 100px ;
   cursor: pointer;
+  border: 1px solid transparent;
 }
 a{
   text-decoration: none;
