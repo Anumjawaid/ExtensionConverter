@@ -5,7 +5,7 @@ var imgdiv = document.getElementById('img')
 var docdiv = document.getElementById('doc')
 var videodiv = document.getElementById('video')
 var audiodiv = document.getElementById('audio')
-var errordiv=document.getElementById('error')
+var errordiv = document.getElementById('error')
 const imgArea = document.querySelector(".functions"),
   dragText = dropArea.querySelector("header"),
   button = dropArea.querySelector("button"),
@@ -23,8 +23,8 @@ let file; //this is a global variable and we'll use it inside multiple functions
 
 let imgextension = ["image/jpeg", "image/jpg", "image/png", "image/PSD", 'image/gif', "image/tiff", "image/tif", "image/PSD", "image/XCD", "image/AI", "image/ico", "image/bmp", "image/CDR"]
 let docextension = ["application/pdf", "text/plain", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"]
-let audioextension = ["audio/ogg", "audio/mpeg", "audio/wav",]  //mpeg is mp3
-let videoextension = ["video/x-matroska", "video/mp4","video/mov"]
+let audioextension = ["audio/ogg", "audio/mpeg", "audio/wav", "audio/opus", 'audio/mp2']  //mpeg is mp3
+let videoextension = ["video/x-matroska", "video/mp4", "video/mov", "video/gif", "video/wav", "video/opus", , "video/wma"]
 
 
 button.onclick = () => {
@@ -68,7 +68,6 @@ async function showFile() {
     let fileReader = new FileReader(); //creating new FileReader object
     fileReader.onload = async () => {
       let fileURL = fileReader.result; //passing user file source in fileURL variable
-      // UNCOMMENT THIS BELOW LINE. I GOT AN ERROR WHILE UPLOADING THIS POST SO I COMMENTED IT
       let imgTag = `<img src="${fileURL}" alt="image" class='fileimg'>`;
       //creating an img tag and passing user selected file source inside src attribute
       imgArea.innerHTML = imgTag; //adding that created img tag inside dropArea container
@@ -117,13 +116,13 @@ async function showFile() {
     fileReader.onload = async () => {
       let fileURL = fileReader.result; //passing user file source in fileURL variable
       // showing document data
-      let vidArea=document.getElementById('vid')
+      let vidArea = document.getElementById('vid')
       let imgTag = `<video width="620" height="240" controls>
       <source src="${fileURL}" >
     Your browser does not support the video tag.
     </video>`;
       vidArea.innerHTML = imgTag
-    
+
       let a = document.createElement('a')
       a.setAttribute('class', 'actionbtn')
 
@@ -164,10 +163,10 @@ async function showFile() {
     fileReader.readAsDataURL(file);
 
   }
-  else{
+  else {
     dropArea.style.display = 'none'
     header.style.display = 'none'
-      errordiv.style.display = 'block'
+    errordiv.style.display = 'block'
   }
 
 
@@ -182,20 +181,8 @@ async function downloadImage(imageSrc) {
   return imageURL
 }
 
-function Crop() {
-  cropImg()
-}
-function cropImg() {
-  cropcontainer.style.display = 'flex'
-  cropcontainer.style.flexDirection = 'column'
-  const ctx = canvas.getContext('2d');
 
-  var image = new Image();
-  image.src = outputfile
-  image.onload = function () {
-    ctx.drawImage(image, 150, 200, 500, 300, 60, 60, 500, 300);
-  }
-}
+
 
 function rotateImg() {
   rotatecontainer.style.display = 'flex'

@@ -76,7 +76,7 @@ body {
   left: 15rem;
 }
 .extensions ,.extensionsdoc,.extensionsvideo,.extensionsaudio{
-  border-top: 2px dashed #000CFF;
+  border-top: 5px dashed #000CFF;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
