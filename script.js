@@ -17,7 +17,9 @@ let vidcontainer = document.querySelector('.extensionsvideo')
 let audcontainer = document.querySelector('.extensionsaudio')
 let cropcontainer = document.querySelector('.cropimage')
 let rotatecontainer = document.querySelector('.rotateimage')
-let outputfile
+let outputfile, handler
+let imgrotate = true, downpointer = true
+
 
 let file; //this is a global variable and we'll use it inside multiple functions
 
@@ -35,7 +37,6 @@ input.addEventListener("change", function () {
   //getting user select file and [0] this means if user select multiple files then we'll select only the first one
   file = this.files[0];
   dropArea.classList.add("active");
-  console.log(file, "file button")
   showFile(); //calling function
 });
 
@@ -44,13 +45,13 @@ input.addEventListener("change", function () {
 dropArea.addEventListener("dragover", (event) => {
   event.preventDefault(); //preventing from default behaviour
   dropArea.classList.add("active");
-  dragText.textContent = "Release to Upload File";
+  dragText.textContent = "Release";
 });
 
 //If user leave dragged File from DropArea
 dropArea.addEventListener("dragleave", () => {
   dropArea.classList.remove("active");
-  dragText.textContent = "Drag & Drop to Upload File";
+  dragText.textContent = "";
 });
 
 //If user drop File on DropArea
@@ -74,13 +75,16 @@ async function showFile() {
       dropArea.style.display = 'none'
       let a = document.createElement('a')
       a.setAttribute('class', 'actionbtn')
+      a.setAttribute('id', 'downimg')
 
       outputfile = await downloadImage(fileURL)
       a.href = outputfile
       a.download = file.name
 
+
       a.textContent = 'Download'
       extension.appendChild(a)
+
       let iname = document.getElementById('imgname')
       iname.innerHTML = "Image Name: " + file.name
       header.style.display = 'none'
@@ -96,12 +100,13 @@ async function showFile() {
       // showing document data
       let a = document.createElement('a')
       a.setAttribute('class', 'actionbtn')
+      a.setAttribute('id', 'downapp')
 
       outputfile = await downloadImage(fileURL)
       a.href = outputfile
       a.download = file.name
 
-      a.textContent = 'Download'
+      a.textContent = 'Current'
       doccontainer.appendChild(a)
       let iname = document.getElementById('docname')
       iname.innerHTML = "Document Name: " + file.name
@@ -117,20 +122,26 @@ async function showFile() {
       let fileURL = fileReader.result; //passing user file source in fileURL variable
       // showing document data
       let vidArea = document.getElementById('vid')
-      let imgTag = `<video width="620" height="240" controls>
-      <source src="${fileURL}" >
-    Your browser does not support the video tag.
-    </video>`;
-      vidArea.innerHTML = imgTag
+      let crvid = document.createElement('video')
+      crvid.src = fileURL
+      crvid.autoplay = false
+      crvid.setAttribute('controls', 'controls')
+      crvid.width = '620'
+      crvid.height = '240'
+      //   let imgTag = `<video width="620" height="240" controls autoplay=false>
+      //   <source src="${fileURL}" >
+      // Your browser does not support the video tag.
+      // </video>`;
+      vidArea.appendChild(crvid)
 
       let a = document.createElement('a')
       a.setAttribute('class', 'actionbtn')
-
+      a.setAttribute('id', 'downvid')
       outputfile = await downloadImage(fileURL)
       a.href = outputfile
       a.download = file.name
 
-      a.textContent = 'Download'
+      a.textContent = 'Current'
       vidcontainer.appendChild(a)
       dropArea.style.display = 'none'
       header.style.display = 'none'
@@ -148,11 +159,12 @@ async function showFile() {
       // showing document data
       let a = document.createElement('a')
       a.setAttribute('class', 'actionbtn')
+      a.setAttribute('id', 'downaud')
       outputfile = await downloadImage(fileURL)
       a.href = outputfile
       a.download = file.name
 
-      a.textContent = 'Download'
+      a.textContent = 'Current'
       audcontainer.appendChild(a)
       dropArea.style.display = 'none'
       let iname = document.getElementById('audname')
@@ -182,15 +194,25 @@ async function downloadImage(imageSrc) {
 }
 
 
-
+let deg = 180
 
 function rotateImg() {
-  rotatecontainer.style.display = 'flex'
-  rotatecontainer.style.flexDirection = 'column'
-  let imagetag = document.createElement('img')
-  imagetag.setAttribute('src', outputfile)
-  imagetag.setAttribute('class', 'rotate')
-  rotatecontainer.appendChild(imagetag)
+
+  if (imgrotate) {
+    rotatecontainer.style.display = 'flex'
+    rotatecontainer.style.flexDirection = 'column'
+
+    let imagetag = document.createElement('img')
+    imagetag.setAttribute('src', outputfile)
+    imagetag.setAttribute('class', 'rotate')
+    rotatecontainer.appendChild(imagetag)
+    imgrotate = false
+  }
+  else {
+    let rs = document.querySelector('.rotate')
+    rs.style.transform = `rotate(${deg}deg)`
+    deg = deg + 90
+  }
 }
 
 
@@ -207,16 +229,20 @@ function ChangeExtension(replaces) {
 
     fileReader.onload = async () => {
       let fileURL = fileReader.result; //passing user file source in fileURL variable
-      // console.log(fileURL,"fileURlss")
       // UNCOMMENT THIS BELOW LINE. I GOT AN ERROR WHILE UPLOADING THIS POST SO I COMMENTED IT
-      let a = document.createElement('a')
-      a.setAttribute('class', 'actionbtn')
+      let actioncall = document.createElement('a')
+      actioncall.setAttribute('class', 'actionbtn')
       let ay = fileURL.replace(current, newr)
       outputfile = await downloadImage(ay)
-      a.href = outputfile
+      let rt = document.getElementById('downaud')
+      rt.textContent = 'Converted'
+      rt.href = outputfile
+      downpointer = false
       // replaces whatever is after . then add the new extension
-      a.download = 'audio.' + replaces.value.split('/')[1]
-      a.click()
+      let fn = file.name.split('.')[0]
+      rt.download = fn + '.' + replaces.value.split('/')[1]
+      rt.textContent = "Converted"
+      // actioncall.click()
 
 
     }
@@ -224,25 +250,24 @@ function ChangeExtension(replaces) {
 
   }
   else if (replaces.value.includes('video')) {
-    // console.log('In AUdio', replaces, "dsd", replaces.value.split('/')[1])
     current = 'data:' + file.type
-    // console.log(replaces.value, replaces.label, "option Extension")
     let fileReader = new FileReader()
     newr = 'data:video/' + replaces.value
 
 
     fileReader.onload = async () => {
       let fileURL = fileReader.result; //passing user file source in fileURL variable
-      // console.log(fileURL,"fileURlss")
       // UNCOMMENT THIS BELOW LINE. I GOT AN ERROR WHILE UPLOADING THIS POST SO I COMMENTED IT
       let a = document.createElement('a')
       a.setAttribute('class', 'actionbtn')
       let ay = fileURL.replace(current, newr)
       outputfile = await downloadImage(ay)
-      a.href = outputfile
+      let rt = document.getElementById('downvid')
+      rt.href = outputfile
       // replaces whatever is after . then add the new extension
-      a.download = 'video.' + replaces.value.split('/')[1]
-      a.click()
+      let fn = file.name.split('.')[0]
+      rt.download = fn + '.' + replaces.value.split('/')[1]
+      rt.textContent = "Converted"
 
 
     }
@@ -257,16 +282,16 @@ function ChangeExtension(replaces) {
 
     fileReader.onload = async () => {
       let fileURL = fileReader.result; //passing user file source in fileURL variable
-      // console.log(fileURL,"fileURlss")
       // UNCOMMENT THIS BELOW LINE. I GOT AN ERROR WHILE UPLOADING THIS POST SO I COMMENTED IT
-      let a = document.createElement('a')
-      a.setAttribute('class', 'actionbtn')
+      let rt = document.getElementById('downapp')
       let ay = fileURL.replace(current, newr)
       outputfile = await downloadImage(ay)
-      a.href = outputfile
+      rt.href = outputfile
       // replaces whatever is after . then add the new extension
-      a.download = 'document.' + replaces.value.split('/')[1]
-      a.click()
+      let fn = file.name.split('.')[0]
+      rt.download = fn + '.' + replaces.value.split('/')[1]
+      rt.textContent = "Converted"
+      // a.click()
 
 
     }
@@ -284,16 +309,20 @@ function ChangeExtension(replaces) {
 
     fileReader.onload = async () => {
       let fileURL = fileReader.result; //passing user file source in fileURL variable
-      // console.log(fileURL,"fileURlss")
       // UNCOMMENT THIS BELOW LINE. I GOT AN ERROR WHILE UPLOADING THIS POST SO I COMMENTED IT
-      let a = document.createElement('a')
-      a.setAttribute('class', 'actionbtn')
+
       let ay = fileURL.replace(current, newr)
       outputfile = await downloadImage(ay)
-      a.href = outputfile
+      let rt = document.getElementById('downimg')
+
+
+      rt.href = outputfile
+      rt.textContent = "Converted"
       // replaces whatever is after . then add the new extension
-      a.download = 'pic.' + replaces.value
-      a.click()
+      let fn = file.name.split('.')[0]
+      rt.download = fn + '.' + replaces.value
+
+
 
 
     }
@@ -368,7 +397,7 @@ window.onload = function () {
       }
     }
 
-    audio.play();
+    // audio.play();
     renderFrame();
   };
 };
