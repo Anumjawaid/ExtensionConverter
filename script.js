@@ -235,13 +235,13 @@ function ChangeExtension(replaces) {
       let ay = fileURL.replace(current, newr)
       outputfile = await downloadImage(ay)
       let rt = document.getElementById('downaud')
-      rt.textContent = 'Converted'
+      rt.textContent = 'Download'
       rt.href = outputfile
       downpointer = false
       // replaces whatever is after . then add the new extension
       let fn = file.name.split('.')[0]
       rt.download = fn + '.' + replaces.value.split('/')[1]
-      rt.textContent = "Converted"
+      rt.textContent = "Download"
       // actioncall.click()
 
 
@@ -267,7 +267,7 @@ function ChangeExtension(replaces) {
       // replaces whatever is after . then add the new extension
       let fn = file.name.split('.')[0]
       rt.download = fn + '.' + replaces.value.split('/')[1]
-      rt.textContent = "Converted"
+      rt.textContent = "Download"
 
 
     }
@@ -290,7 +290,7 @@ function ChangeExtension(replaces) {
       // replaces whatever is after . then add the new extension
       let fn = file.name.split('.')[0]
       rt.download = fn + '.' + replaces.value.split('/')[1]
-      rt.textContent = "Converted"
+      rt.textContent = "Download"
       // a.click()
 
 
@@ -317,7 +317,7 @@ function ChangeExtension(replaces) {
 
 
       rt.href = outputfile
-      rt.textContent = "Converted"
+      rt.textContent = "Download"
       // replaces whatever is after . then add the new extension
       let fn = file.name.split('.')[0]
       rt.download = fn + '.' + replaces.value
