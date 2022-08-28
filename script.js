@@ -16,9 +16,10 @@ let doccontainer = document.querySelector('.extensionsdoc')
 let vidcontainer = document.querySelector('.extensionsvideo')
 let audcontainer = document.querySelector('.extensionsaudio')
 let cropcontainer = document.querySelector('.cropimage')
+var audio = document.getElementById("audio1");
 let rotatecontainer = document.querySelector('.rotateimage')
 let outputfile, handler
-let imgrotate = true, downpointer = true
+let imgrotate = true, audpointer = true
 
 
 let file; //this is a global variable and we'll use it inside multiple functions
@@ -122,17 +123,17 @@ async function showFile() {
       let fileURL = fileReader.result; //passing user file source in fileURL variable
       // showing document data
       let vidArea = document.getElementById('vid')
-      let crvid = document.createElement('video')
-      crvid.src = fileURL
-      crvid.autoplay = false
-      crvid.setAttribute('controls', 'controls')
-      crvid.width = '620'
-      crvid.height = '240'
-      //   let imgTag = `<video width="620" height="240" controls autoplay=false>
-      //   <source src="${fileURL}" >
-      // Your browser does not support the video tag.
-      // </video>`;
-      vidArea.appendChild(crvid)
+
+
+
+
+     
+        let imgTag = `<video width="620" height="240" controls autoplay=false>
+        <source src="${fileURL}" >
+      Your browser does not support the video tag.
+      </video>`;
+      // vidArea.appendChild(imgTag)
+      vidArea.innerHTML=imgTag
 
       let a = document.createElement('a')
       a.setAttribute('class', 'actionbtn')
@@ -153,6 +154,8 @@ async function showFile() {
 
   }
   else if (audioextension.includes(fileType)) {
+    audpointer = false
+    console.log(audpointer, "from else case")
     let fileReader = new FileReader(); //creating new FileReader object
     fileReader.onload = async () => {
       let fileURL = fileReader.result; //passing user file source in fileURL variable
@@ -161,9 +164,10 @@ async function showFile() {
       a.setAttribute('class', 'actionbtn')
       a.setAttribute('id', 'downaud')
       outputfile = await downloadImage(fileURL)
+      audio.src=fileURL
       a.href = outputfile
       a.download = file.name
-
+      // Qwerty()
       a.textContent = 'Current'
       audcontainer.appendChild(a)
       dropArea.style.display = 'none'
@@ -171,8 +175,67 @@ async function showFile() {
       iname.innerHTML = "Document Name: " + file.name
       header.style.display = 'none'
       audiodiv.style.display = 'block'
+
+
+          audio.src = fileURL
+         
+          var context = new AudioContext();
+          var src = context.createMediaElementSource(audio);
+          var analyser = context.createAnalyser();
+      
+          var canvas = document.getElementById("canvas");
+          canvas.width = window.innerWidth;
+          canvas.height = window.innerHeight;
+          var ctx = canvas.getContext("2d");
+      
+          src.connect(analyser);
+          analyser.connect(context.destination);
+      
+          analyser.fftSize = 256;
+      
+          var bufferLength = analyser.frequencyBinCount;
+      
+          var dataArray = new Uint8Array(bufferLength);
+      
+          var WIDTH = canvas.width;
+          var HEIGHT = canvas.height;
+      
+          var barWidth = (WIDTH / bufferLength) * 2.5;
+          var barHeight;
+          var x = 0;
+      
+          function renderFrame() {
+            requestAnimationFrame(renderFrame);
+      
+            x = 0;
+      
+            analyser.getByteFrequencyData(dataArray);
+      
+            ctx.fillStyle = "#fff";
+            ctx.fillRect(0, 0, WIDTH, HEIGHT);
+      
+            for (var i = 0; i < bufferLength; i++) {
+              barHeight = dataArray[i];
+      
+              var r = barHeight + (25 * (i / bufferLength));
+              var g = 250 * (i / bufferLength);
+              var b = 50;
+      
+              ctx.fillStyle = "#000CFF";
+              ctx.fillRect(x, HEIGHT - barHeight, barWidth, barHeight);
+      
+              x += barWidth + 1;
+            }
+          }
+      
+          audio.play();
+          renderFrame();
+        
+        
     }
     fileReader.readAsDataURL(file);
+    
+
 
   }
   else {
@@ -237,16 +300,22 @@ function ChangeExtension(replaces) {
       let rt = document.getElementById('downaud')
       rt.textContent = 'Download'
       rt.href = outputfile
-      downpointer = false
+
       // replaces whatever is after . then add the new extension
       let fn = file.name.split('.')[0]
       rt.download = fn + '.' + replaces.value.split('/')[1]
       rt.textContent = "Download"
       // actioncall.click()
 
+      
+
 
     }
     fileReader.readAsDataURL(file);
+    
+  
+  
+  
 
   }
   else if (replaces.value.includes('video')) {
@@ -337,67 +406,3 @@ function ChangeExtension(replaces) {
 
 
 }
-
-window.onload = function () {
-
-  var file = document.getElementById("thefile");
-  var audio = document.getElementById("audio1");
-
-  file.onchange = function () {
-    var files = this.files;
-    audio.src = URL.createObjectURL(files[0]);
-    audio.load();
-    audio.play();
-    var context = new AudioContext();
-    var src = context.createMediaElementSource(audio);
-    var analyser = context.createAnalyser();
-
-    var canvas = document.getElementById("canvas");
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    var ctx = canvas.getContext("2d");
-
-    src.connect(analyser);
-    analyser.connect(context.destination);
-
-    analyser.fftSize = 256;
-
-    var bufferLength = analyser.frequencyBinCount;
-
-    var dataArray = new Uint8Array(bufferLength);
-
-    var WIDTH = canvas.width;
-    var HEIGHT = canvas.height;
-
-    var barWidth = (WIDTH / bufferLength) * 2.5;
-    var barHeight;
-    var x = 0;
-
-    function renderFrame() {
-      requestAnimationFrame(renderFrame);
-
-      x = 0;
-
-      analyser.getByteFrequencyData(dataArray);
-
-      ctx.fillStyle = "#fff";
-      ctx.fillRect(0, 0, WIDTH, HEIGHT);
-
-      for (var i = 0; i < bufferLength; i++) {
-        barHeight = dataArray[i];
-
-        var r = barHeight + (25 * (i / bufferLength));
-        var g = 250 * (i / bufferLength);
-        var b = 50;
-
-        ctx.fillStyle = "#000CFF";
-        ctx.fillRect(x, HEIGHT - barHeight, barWidth, barHeight);
-
-        x += barWidth + 1;
-      }
-    }
-
-    // audio.play();
-    renderFrame();
-  };
-};
